@@ -1,13 +1,3 @@
-const appState = {
-    title: {
-        text: 'React.js 小书',
-        color: 'red'
-    },
-    content: {
-        text: 'React.js 小书内容',
-        color: 'blue'
-    }
-}
 
 function renderApp(appState) {
     renderTitle(appState.title);
@@ -26,7 +16,18 @@ function renderContent(content) {
     contentDOM.style.color = content.color;
 }
 
-function dispatch(action) {
+let appState = {
+    title: {
+        text: 'React.js 小书',
+        color: 'red'
+    },
+    content: {
+        text: 'React.js 小书内容',
+        color: 'blue'
+    }
+}
+
+function stateChanger(action) {
     switch (action.type) {
         case 'UPDATE_TITLE_TEXT':
             appState.title.text = action.text;
@@ -39,16 +40,32 @@ function dispatch(action) {
     }
 }
 
+function createStore(state,stateChanger){
+    const listeners = [];
+    const subscribe = (listener)=>listeners.push(listener);
+    const getState = ()=>state
+    const dispatch = (action)=>{
+        stateChanger(action)
+        listeners.forEach((listener)=>listener())
+    }
+    return {getState,dispatch,subscribe}
+}
+
+const store = createStore(appState,stateChanger);
+
+store.subscribe(()=>renderApp(store.getState()));
 
 
-dispatch({
+renderApp(store.getState())//首次渲染页面
+
+store.dispatch({
     type:'UPDATE_TITLE_TEXT',
     text:'《React.js 小书》'
 });//修改标题文本
 
-dispatch({
+store.dispatch({
     type:'UPDATE_TITLE_COLOR',
     color:'blue'
 })
 
-renderApp(appState);
+renderApp(store.getState());
