@@ -1,22 +1,18 @@
 import React,{Component} from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import ThemeSwitch from './ThemeSwitch'
 import Header from './Header'
-import Content from './Content'
-import './index.css'
 
-class Index extends Component{
+class Content extends Component{
     render(){
         return (
             <div>
-                <Header />
-                <Content />
+                <p> React.js 小书内容 </p>
+                <ThemeSwitch />
             </div>
         )
     }
 }
 
-ReactDOM.render(
-    <Index/>,
-    document.getElementById('root')
-)
+export default Content
