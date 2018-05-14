@@ -42,7 +42,7 @@ class ThemeSwitch extends Component{
                 > Red </button>
                 <button 
                 style={{color:this.state.themeColor}} 
-                onClick={this.handleSwitchColor.bind(this,'#ccc')}
+                onClick={this.handleSwitchColor.bind(this,'blue')}
                 > Blue </button>
             </div>
         )
