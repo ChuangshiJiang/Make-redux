@@ -21,7 +21,7 @@ export const connect = (mapStateToProps,mapDispatchToProps) =>(WrappedComponent)
         _updateProps(){
             const {store} = this.context;
             let stateProps = mapStateToProps?mapStateToProps(store.getState(),this.props):{};
-            let dispatchProps = mapDispatchToProps?mapDispatchToProps(store.dispatchProps,this.props):{};
+            let dispatchProps = mapDispatchToProps?mapDispatchToProps(store.dispatch,this.props):{};
             this.setState({
                 allProps:{
                     ...stateProps,
@@ -39,12 +39,4 @@ export const connect = (mapStateToProps,mapDispatchToProps) =>(WrappedComponent)
     }
 
     return Connect
-}
-
-const mapStateToProps = (state)=>{
-    return {
-        themeColor:state.themeColor,
-        themeName:state.themeName,
-        fullName:`${state.firstName} ${state.lastName}`
-    }
 }
