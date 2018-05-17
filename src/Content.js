@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import ThemeSwitch from './ThemeSwitch'
 import Header from './Header'
-import { connect } from './react-redux';
+import { connect } from 'react-redux';
 
 class Content extends Component{
     static propTypes={
