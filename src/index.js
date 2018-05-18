@@ -1,21 +1,22 @@
-import React,{Component} from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import InputWithUserName from './InputWithUserName'
-import TextWithContent from './TextareaWithContent'
-
-class Index extends Component{
-    render(){
-        return (
-            <div>
-                用户名：<InputWithUserName/>
-                <br/>
-                内容：<TextWithContent />
-            </div>
-        )
+import PropTypes from 'prop-types'
+import MakeProvider from './makeProvider'
+class Index extends Component {
+    static contextTypes = {
+        data:PropTypes.any
     }
-}
+    render () {
+      return (
+        <div>{this.context.data}</div>
+      )
+    }
+  }
+  
+  Index = MakeProvider([<div key={1}>lala</div>,<p key={2}>haha</p>])(Index)
+  
 
 ReactDOM.render(
-    <Index/>,
+    <Index />,
     document.getElementById('root')
 )
