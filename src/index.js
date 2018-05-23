@@ -1,130 +1,101 @@
 /*dispatch 函数，专门负责数据的修改*/
 
-function stateChanger(state,action) {
-  if(!state){
-    return {
-      title: {
-        text: 'React.js 小书',
-        color: 'red',
-      },
-      content: {
-        text: 'React.js 小书内容',
-        color: 'blue'
-      }
-    }
+function userReducer(state, action) {
+  if (!state) {
+    return {};
   }
   switch (action.type) {
-    case 'UPDATE_TITLE_TEXT':
-      return{
-        ...state,
-        title:{
-          ...state.title,
-          text:action.text
-        }
-      }
-    case 'UPDATE_TITLE_COLOR':
+    case 'ADD_USER':
+      return action.user;
+    case 'UPDATE_USER':
       return {
         ...state,
-        title:{
-          ...state.title,
-          color:action.color
-        }
-      }
-      case 'UPDATE_CONTENT_TEXT':
-      return{
-        ...state,
-        content:{
-          ...state.content,
-          text:action.text
-        }
-      }
-    case 'UPDATE_CONTENT_COLOR':
-      return {
-        ...state,
-        content:{
-          ...state.content,
-          color:action.color
-        }
-      }
+        ...action.user
+      };
+    case 'DELETE_USER':
+      return [];
     default:
       return state;
   }
 }
 
-function createStore(reducer){
-  let state = null;
+function createStore(reducer) {
+  let state = [];
   const listeners = [];
-  const subscribe = (listener)=>listeners.push(listener);
-  const getState = ()=>state;
-  const dispatch = (action)=>{
-    state = stateChanger(state,action)
-    listeners.forEach((listener)=>listener());
+  const subscribe = (listener) => listeners.push(listener);
+  const getState = () => state;
+  const dispatch = (action) => {
+    state = userReducer(state, action)
+    listeners.forEach((listener) => listener());
   };
   dispatch({}); //初始化state
-  return {getState,dispatch,subscribe}
+  return { getState, dispatch, subscribe }
 }
 
-function renderApp(newAppState,oldAppState = {}) {
-  if(newAppState === oldAppState) return; //数据没有变化就不渲染
-  console.log('render app...');
-  renderTitle(newAppState.title,oldAppState.title);
-  renderContent(newAppState.content,oldAppState.content);
+function renderUser(newUser, oldUser = []) {
+  if (newUser === oldUser) return; //数据没有变化就不渲染
+  console.log('render user...');
+  renderName(newUser.name, oldUser.name);
+  renderAge(newUser.age, oldUser.age);
+  renderGender(newUser.gender, oldUser.gender);
 }
 
-function renderTitle(newTitle,oldTitle = {}) {
-  if(newTitle === oldTitle) return; //数据没有变化就不渲染
+function renderName(newName, oldName) {
+  if (newName === oldName) return; //数据没有变化就不渲染
   console.log('render title...');
-  const titleDOM = document.getElementById("title");
-  titleDOM.innerHTML = newTitle.text;
-  titleDOM.style.color = newTitle.color;
+  const titleDOM = document.getElementById("name");
+  titleDOM.innerHTML = newName;
 }
 
-function renderContent(newContent,oldContent) {
-  if(newContent === oldContent) return; //数据没有变化就不渲染
-  console.log('render content...');
-  const contentDOM = document.getElementById("content");
-  contentDOM.innerHTML = newContent.text;
-  contentDOM.style.color = newContent.color;
+function renderAge(newAge, oldAge) {
+  if (newAge === oldAge) return; //数据没有变化就不渲染
+  console.log('render age...');
+  const contentDOM = document.getElementById("age");
+  contentDOM.innerHTML = newAge;
 }
 
-const store = createStore(stateChanger);
-let oldState = store.getState();  //缓存旧的 state
-store.subscribe(()=> {
-  const newState = store.getState();  //数据可能变化，获取新的 state
-  renderApp(newState,oldState); //把新旧两个state 传进去比较和渲染
-  oldState = newState;  //渲染完成以后，新的 newState 变成旧的 oldState
+function renderGender(newGender, oldGender) {
+  if (newGender === oldGender) return; //数据没有变化就不渲染
+  console.log('render gender...');
+  const contentDOM = document.getElementById("gender");
+  contentDOM.innerHTML = newGender;
+}
+
+const store = createStore(userReducer);
+let oldUser = store.getState();  //缓存旧的 state
+store.subscribe(() => {
+  const newUser = store.getState();  //数据可能变化，获取新的 state
+  renderUser(newUser, oldUser); //把新旧两个state 传进去比较和渲染
+  oldUser = newUser;  //渲染完成以后，新的 newState 变成旧的 oldState
 });
 
-renderApp(store.getState());//页面首次渲染
+renderUser(store.getState());//页面首次渲染
 
-let changeArr = [
-  {
-    type: 'UPDATE_TITLE_TEXT',
-    text: '《React.js 小书》',
-  },
-  {
-    type: 'UPDATE_TITLE_COLOR',
-    color: 'black'
-  },
-  {
-    type: 'UPDATE_CONTENT_TEXT',
-    text: 'React.js 小书的内容还是不错的',
-  },
-  {
-    type: 'UPDATE_CONTENT_COLOR',
-    color: 'green'
+store.dispatch({
+  type:'ADD_USER',
+  user:{
+    name:'Jack',
+    age:20,
+    gender:'male'
   }
-];
+});
 
-
-//修改标题文本
-//store.dispatch();
-let index = 0,changeArrLen = changeArr.length;
-for(let style of changeArr.entries()){
+setTimeout(() => {
+  store.dispatch({
+    type:'UPDATE_USER',
+    user:{
+      name:'Tom',
+      age:21,
+      gender:'female'
+    }
+  });
   setTimeout(() => {
-    store.dispatch(style[1]);    
-  }, style[0]*1000);
-}
+    store.dispatch({
+      type:'DELETE_USER',
+    });
+  }, 1000);
+}, 1000);
+
 
 
 
