@@ -1,6 +1,18 @@
 /*dispatch 函数，专门负责数据的修改*/
 
 function stateChanger(state,action) {
+  if(!state){
+    return {
+      title: {
+        text: 'React.js 小书',
+        color: 'red',
+      },
+      content: {
+        text: 'React.js 小书内容',
+        color: 'blue'
+      }
+    }
+  }
   switch (action.type) {
     case 'UPDATE_TITLE_TEXT':
       return{
@@ -39,18 +51,8 @@ function stateChanger(state,action) {
   }
 }
 
-let appState = {
-  title: {
-    text: 'React.js 小书',
-    color: 'red',
-  },
-  content: {
-    text: 'React.js 小书内容',
-    color: 'blue'
-  }
-}
-
-function createStore(state,stateChanger){
+function createStore(reducer){
+  let state = null;
   const listeners = [];
   const subscribe = (listener)=>listeners.push(listener);
   const getState = ()=>state;
@@ -58,6 +60,7 @@ function createStore(state,stateChanger){
     state = stateChanger(state,action)
     listeners.forEach((listener)=>listener());
   };
+  dispatch({}); //初始化state
   return {getState,dispatch,subscribe}
 }
 
@@ -84,7 +87,7 @@ function renderContent(newContent,oldContent) {
   contentDOM.style.color = newContent.color;
 }
 
-const store = createStore(appState,stateChanger);
+const store = createStore(stateChanger);
 let oldState = store.getState();  //缓存旧的 state
 store.subscribe(()=> {
   const newState = store.getState();  //数据可能变化，获取新的 state
