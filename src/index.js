@@ -1,23 +1,10 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import Header from './ThemeColor/Header'
 import Content from './ThemeColor/Content'
+import {createStore} from 'redux'
 import { Provider } from './ThemeColor/react-redux'
 import './index.css'
-
-function createStore(reducer) {
-    let state = null
-    const listeners = []
-    const subscribe = (listener) => listeners.push(listener)
-    const getState = () => state
-    const dispatch = (action) => {
-        state = reducer(state, action)
-        listeners.forEach((listener) => listener())
-    }
-    dispatch({}) // 初始化 state
-    return { getState, dispatch, subscribe }
-}
 
 const themeReducer = (state, action) => {
     if (!state) return {
