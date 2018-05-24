@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import Header from './ThemeColor/Header'
-import Content from './ThemeColor/Content'
+import Header from './containers/Header'
+import Content from './containers/Content'
 import {createStore} from 'redux'
 import { Provider } from './ThemeColor/react-redux'
 import './index.css'
@@ -20,6 +20,8 @@ const themeReducer = (state, action) => {
             return state
     }
 }
+
+
 
 const store = createStore(themeReducer)
 
