@@ -10,13 +10,13 @@ function createStore(reducer) {
     const listeners = [];
     const subscribe = (listener) => listeners.push(listener);
     const getState = () => state;
-    const dispathch = (action) => {
+    const dispatch = (action) => {
         state = reducer(state, action);
         listeners.forEach((listener) => listener());
     }
 
-    dispathch({});//初始化 state
-    return { getState, dispathch, subscribe };
+    dispatch({});//初始化 state
+    return { getState, dispatch, subscribe };
 }
 
 const themeReduecer = (state, action) => {
