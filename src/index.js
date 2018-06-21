@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import Header from './Header';
+import Header from './containers/Header';
 import Content from './Content';
 import { createStore } from 'redux'
 import './index.css';
