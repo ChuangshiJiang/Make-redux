@@ -1,44 +1,44 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+//import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import Header from './containers/Header';
-import Content from './Content';
-import { createStore } from 'redux'
+//import Header from './containers/Header';
+//import Content from './Content';
+//import { createStore } from 'redux'
 import './index.css';
-import {Provider} from './react-redux';
+//import {Provider} from './react-redux';
 import Refs from './components/refs/Refs'
-const themeReduecer = (state, action) => {
-    if (!state) {
-        return {
-            themeColor: 'red'
-        }
-    }
+// const themeReduecer = (state, action) => {
+//     if (!state) {
+//         return {
+//             themeColor: 'red'
+//         }
+//     }
 
-    switch (action.type) {
-        case 'CHANGE_COLOR':
-            return {
-                ...state,
-                themeColor: action.themeColor
-            }
-        default:
-            return state;
-    }
-}
+//     switch (action.type) {
+//         case 'CHANGE_COLOR':
+//             return {
+//                 ...state,
+//                 themeColor: action.themeColor
+//             }
+//         default:
+//             return state;
+//     }
+// }
 
 
-const store = createStore(themeReduecer);
+//const store = createStore(themeReduecer);
 
-class Index extends Component {
+// class Index extends Component {
 
-    render() {
-        return (
-            <div>
-                <Header />
-                <Content />
-            </div>
-        )
-    }
-}
+//     render() {
+//         return (
+//             <div>
+//                 <Header />
+//                 <Content />
+//             </div>
+//         )
+//     }
+// }
 
 ReactDOM.render(
     // <Provider store={store}>
